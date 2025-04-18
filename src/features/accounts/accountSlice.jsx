@@ -2,12 +2,18 @@ const initialStateAccount = {
   balance: 0,
   loan: 0,
   loanPurpose: "",
+  isLoading: false,
 };
+
+const KEY = "99b81557e63a57d5f0defe33";
 
 export default function accountReducer(state = initialStateAccount, action) {
   switch (action.type) {
     case "account/deposit":
-      return { ...state, balance: state.balance + action.payload };
+      return { ...state, balance: state.balance + action.payload, isLoading: false };
+
+    case "account/convertingCurrency":
+      return { ...state, isLoading: true };
 
     case "account/withdraw":
       return { ...state, balance: state.balance - action.payload };
@@ -24,8 +30,18 @@ export default function accountReducer(state = initialStateAccount, action) {
   }
 }
 
-export function deposit(amount) {
-  return { type: "account/deposit", payload: amount };
+export function deposit(amount, currency) {
+  if (currency === "USD") return { type: "account/deposit", payload: amount };
+
+  return async function (dispatch, getState) {
+    dispatch({ type: "account/convertingCurrency" });
+
+    const res = await fetch(`https://v6.exchangerate-api.com/v6/${KEY}/latest/${currency}`);
+    const data = await res.json();
+    const converted = data.conversion_rates["USD"] * amount;
+
+    dispatch({ type: "account/deposit", payload: converted });
+  };
 }
 
 export function withdraw(amount) {
