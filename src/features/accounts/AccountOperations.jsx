@@ -30,7 +30,7 @@ function AccountOperations() {
   function handleRequestLoan() {
     if (!loanAmount || !loanPurpose) return;
 
-    dispatch(requestLoan((loanAmount, loanPurpose)));
+    dispatch(requestLoan(loanAmount, loanPurpose));
     setLoanAmount("");
     setLoanPurpose("");
   }
@@ -65,7 +65,7 @@ function AccountOperations() {
 
         <div>
           <label>Request loan</label>
-          <input type="number" value={loanAmount} onChange={(e) => setLoanAmount(+e.target.value)} placeholder="Loan amount" />
+          <input type="number" value={loanAmount} onChange={(e) => setLoanAmount(e.target.value)} placeholder="Loan amount" />
           <input value={loanPurpose} onChange={(e) => setLoanPurpose(e.target.value)} placeholder="Loan purpose" />
           <button onClick={handleRequestLoan}>Request loan</button>
         </div>
