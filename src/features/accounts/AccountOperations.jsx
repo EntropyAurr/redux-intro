@@ -10,7 +10,7 @@ function AccountOperations() {
   const [currency, setCurrency] = useState("USD");
 
   const dispatch = useDispatch();
-  const { loan: currentLoan, loanPurpose: currentLoanPurpose, balance, isLoading } = useSelector((state) => state.account);
+  const { loan: currentLoan, loanPurpose: currentLoanPurpose, isLoading } = useSelector((state) => state.account);
 
   function handleDeposit() {
     if (!depositAmount) return;
@@ -65,7 +65,7 @@ function AccountOperations() {
 
         <div>
           <label>Request loan</label>
-          <input type="number" value={loanAmount} onChange={(e) => setLoanAmount(e.target.value)} placeholder="Loan amount" />
+          <input type="number" value={loanAmount} onChange={(e) => setLoanAmount(+e.target.value)} placeholder="Loan amount" />
           <input value={loanPurpose} onChange={(e) => setLoanPurpose(e.target.value)} placeholder="Loan purpose" />
           <button onClick={handleRequestLoan}>Request loan</button>
         </div>

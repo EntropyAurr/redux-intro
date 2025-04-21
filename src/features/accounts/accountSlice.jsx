@@ -46,13 +46,14 @@ const accountSlice = createSlice({
 });
 
 export const { withdraw, requestLoan, payLoan } = accountSlice.actions;
+export default accountSlice.reducer;
 
 const KEY = "99b81557e63a57d5f0defe33";
 
 export function deposit(amount, currency) {
   if (currency === "USD") return { type: "account/deposit", payload: amount };
 
-  return async function (dispatch, getState) {
+  return async function (dispatch) {
     dispatch({ type: "account/convertingCurrency" });
 
     const res = await fetch(`https://v6.exchangerate-api.com/v6/${KEY}/latest/${currency}`);
@@ -63,11 +64,7 @@ export function deposit(amount, currency) {
   };
 }
 
-export default accountSlice.reducer;
-
 /* 
-
-
 export default function accountReducer(state = initialState, action) {
   switch (action.type) {
     case "account/deposit":

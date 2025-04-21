@@ -4,7 +4,6 @@ import { useState } from "react";
 
 function Customer() {
   const customer = useSelector((state) => state.customer.fullName);
-
   const dispatch = useDispatch();
 
   const [fullName, setFullName] = useState("");
