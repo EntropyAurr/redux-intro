@@ -3,7 +3,7 @@ import { updateName } from "./customerSlice";
 import { useState } from "react";
 
 function Customer() {
-  const customer = useSelector((store) => store.customer.fullName);
+  const customer = useSelector((state) => state.customer.fullName);
 
   const dispatch = useDispatch();
 
